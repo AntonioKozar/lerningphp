@@ -11,11 +11,13 @@ function autoloader($classname) {
     }
 spl_autoload_register('autoloader');
 
+function checkIfValid(Customer $customer, array $books): bool {
+    return $customer->getAmountToBorrow() >= count($books);
+}
 
-$book1 = new Book("1984", "George Orwell", 9785267006323, 12);
-
-$customer1 = new Customer(5, 'John', 'Doe', 'johndoe@mail.com');
-
-var_dump($customer1::getLastId());
+$customer1 = new Basic(5, 'John', 'Doe', 'johndoe@mail.com');
+var_dump(checkIfValid($customer1, [$book1])); // ok
+$customer2 = new Customer(7, 'James', 'Bond', 'james@bond.com');
+var_dump(checkIfValid($customer2, [$book1])); // fails
 
 ?>
